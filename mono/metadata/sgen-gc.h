@@ -407,6 +407,11 @@ enum {
 
 extern SgenHashTable roots_hash [ROOT_TYPE_NUM];
 
+/* 	contains the collection count for objects, at the time of their allocation.
+ *	Used to get object age. */
+extern SgenHashTable alloc_cycle_hash; 
+
+
 typedef void (*IterateObjectCallbackFunc) (char*, size_t, void*);
 
 int sgen_thread_handshake (BOOL suspend) MONO_INTERNAL;
@@ -453,7 +458,9 @@ enum {
 	INTERNAL_MEM_BRIDGE_ALIVE_HASH_TABLE_ENTRY,
 	INTERNAL_MEM_JOB_QUEUE_ENTRY,
 	INTERNAL_MEM_TOGGLEREF_DATA,
-	INTERNAL_MEM_CARDTABLE_MOD_UNION,
+	INTERNAL_MEM_CARDTABLE_MOD_UNION,	
+	INTERNAL_MEM_ALLOC_CYCLE_HASH_TABLE,
+	INTERNAL_MEM_ALLOC_CYCLE_HASH_TABLE_ENTRY,
 	INTERNAL_MEM_MAX
 };
 
@@ -996,6 +1003,7 @@ extern __thread char *stack_end;
 
 extern GCMemSection *nursery_section;
 extern int stat_major_gcs;
+extern guint32 stat_total_gcs;
 extern guint32 collect_before_allocs;
 extern guint32 verify_before_allocs;
 extern gboolean has_per_allocation_action;

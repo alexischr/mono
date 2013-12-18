@@ -128,6 +128,10 @@ gboolean    mono_gc_ephemeron_array_add (MonoObject *obj) MONO_INTERNAL;
 /* To disable synchronous, evacuating collections - concurrent SGen only */
 gboolean    mono_gc_set_allow_synchronous_major (gboolean flag) MONO_INTERNAL;
 
+/* Get the object's age (the number of collections it has survived) */
+gint32     mono_gc_get_object_age (MonoObject *obj) MONO_INTERNAL;
+int ves_icall_MonoExt_GetObjectAge (MonoObject *this, MonoObject *obj);
+
 MonoBoolean
 GCHandle_CheckCurrentDomain (guint32 gchandle) MONO_INTERNAL;
 

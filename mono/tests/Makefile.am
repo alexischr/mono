@@ -389,7 +389,8 @@ BASE_TEST_CS_SRC=		\
 	allow-synchronous-major.cs	\
 	unload-appdomain-on-shutdown.cs	\
 	block_guard_restore_aligment_on_exit.cs	\
-	finally_block_ending_in_dead_bb.cs
+	finally_block_ending_in_dead_bb.cs \
+	sgen-get-object-age.cs
 
 TEST_CS_SRC_DIST=	\
 	$(BASE_TEST_CS_SRC)	\
@@ -883,7 +884,7 @@ debug-casts:
 	@$(MCS) -r:TestDriver.dll $(srcdir)/debug-casts.cs
 	@$(RUNTIME) --debug=casts debug-casts.exe
 
-EXTRA_DIST += sgen-bridge.cs sgen-descriptors.cs sgen-gshared-vtype.cs sgen-bridge-major-fragmentation.cs sgen-domain-unload.cs sgen-weakref-stress.cs sgen-cementing-stress.cs sgen-case-23400.cs 	finalizer-wait.cs critical-finalizers.cs sgen-domain-unload-2.cs sgen-suspend.cs
+EXTRA_DIST += sgen-bridge.cs sgen-descriptors.cs sgen-gshared-vtype.cs sgen-bridge-major-fragmentation.cs sgen-domain-unload.cs sgen-weakref-stress.cs sgen-cementing-stress.cs sgen-case-23400.cs 	finalizer-wait.cs critical-finalizers.cs sgen-domain-unload-2.cs sgen-suspend.cs sgen-get-object-age.cs
 
 
 #those are actually configurations, eg plain_sgen-descriptors.exe
@@ -897,7 +898,8 @@ SGEN_TESTS =	\
 	sgen-domain-unload.exe	\
 	sgen-weakref-stress.exe	\
 	sgen-cementing-stress.exe	\
-	sgen-case-23400.exe
+	sgen-case-23400.exe	\
+	sgen-get-object-age.exe
 
 SGEN_CONFIGURATIONS =	\
 	"|plain"	\

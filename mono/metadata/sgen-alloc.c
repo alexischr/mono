@@ -161,6 +161,7 @@ mono_gc_alloc_obj_nolock (MonoVTable *vtable, size_t size)
 	char *new_next;
 	TLAB_ACCESS_INIT;
 
+
 	HEAVY_STAT (++stat_objects_alloced);
 	if (size <= SGEN_MAX_SMALL_OBJ_SIZE)
 		HEAVY_STAT (stat_bytes_alloced += size);
@@ -223,7 +224,7 @@ mono_gc_alloc_obj_nolock (MonoVTable *vtable, size_t size)
 			if (G_UNLIKELY (MONO_GC_NURSERY_OBJ_ALLOC_ENABLED ()))
 				MONO_GC_NURSERY_OBJ_ALLOC ((mword)p, size, vtable->klass->name_space, vtable->klass->name);
 			g_assert (*p == NULL);
-			mono_atomic_store_seq (p, vtable);
+			mono_atomic_store_seq (p, vtable);			
 
 			return p;
 		}
@@ -334,6 +335,7 @@ mono_gc_alloc_obj_nolock (MonoVTable *vtable, size_t size)
 				MONO_GC_NURSERY_OBJ_ALLOC ((mword)p, size, vtable->klass->name_space, vtable->klass->name);
 		}
 		mono_atomic_store_seq (p, vtable);
+
 	}
 
 	return p;
@@ -466,6 +468,9 @@ mono_gc_alloc_obj (MonoVTable *vtable, size_t size)
 	UNLOCK_GC;
 	if (G_UNLIKELY (!res))
 		return mono_gc_out_of_memory (size);
+
+	sgen_hash_table_replace(&alloc_cycle_hash, res, &stat_total_gcs, NULL);
+
 	return res;
 }
 

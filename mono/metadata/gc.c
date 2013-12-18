@@ -584,6 +584,13 @@ ves_icall_Mono_Runtime_SetGCAllowSynchronousMajor (MonoBoolean flag)
 	return mono_gc_set_allow_synchronous_major (flag);
 }
 
+int
+ves_icall_MonoExt_GetObjectAge (MonoObject *this, MonoObject *obj)
+{
+	return mono_gc_get_object_age (obj);
+}
+
+
 typedef struct {
 	guint32  *bitmap;
 	gpointer *entries;

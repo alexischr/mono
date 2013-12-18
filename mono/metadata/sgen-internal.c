@@ -110,6 +110,8 @@ description_for_type (int type)
 	case INTERNAL_MEM_JOB_QUEUE_ENTRY: return "job-queue-entry";
 	case INTERNAL_MEM_TOGGLEREF_DATA: return "toggleref-data";
 	case INTERNAL_MEM_CARDTABLE_MOD_UNION: return "cardtable-mod-union";
+	case INTERNAL_MEM_ALLOC_CYCLE_HASH_TABLE: return "alloc-cycle-hash-table";
+	case INTERNAL_MEM_ALLOC_CYCLE_HASH_TABLE_ENTRY: return "alloc-cycle-hash-table-entry";
 	default:
 		g_assert_not_reached ();
 	}

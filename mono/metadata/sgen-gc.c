@@ -324,6 +324,7 @@ static int stat_wbarrier_object_copy = 0;
 
 int stat_minor_gcs = 0;
 int stat_major_gcs = 0;
+guint32 stat_total_gcs = 0;
 
 static long long stat_pinned_objects = 0;
 
@@ -454,6 +455,9 @@ SgenHashTable roots_hash [ROOT_TYPE_NUM] = {
 	SGEN_HASH_TABLE_INIT (INTERNAL_MEM_ROOTS_TABLE, INTERNAL_MEM_ROOT_RECORD, sizeof (RootRecord), mono_aligned_addr_hash, NULL),
 	SGEN_HASH_TABLE_INIT (INTERNAL_MEM_ROOTS_TABLE, INTERNAL_MEM_ROOT_RECORD, sizeof (RootRecord), mono_aligned_addr_hash, NULL)
 };
+
+SgenHashTable alloc_cycle_hash = SGEN_HASH_TABLE_INIT (INTERNAL_MEM_ALLOC_CYCLE_HASH_TABLE, INTERNAL_MEM_ALLOC_CYCLE_HASH_TABLE_ENTRY, sizeof (guint32), mono_aligned_addr_hash, NULL);
+
 static mword roots_size = 0; /* amount of memory in the root set */
 
 #define GC_ROOT_NUM 32
@@ -2552,6 +2556,7 @@ collect_nursery (SgenGrayQueue *unpin_queue, gboolean finish_up_concurrent_mark)
 
 	stat_minor_gcs++;
 	gc_stats.minor_gc_count ++;
+  stat_total_gcs++;
 
 	MONO_GC_CHECKPOINT_1 (GENERATION_NURSERY);
 
@@ -3077,6 +3082,7 @@ major_start_collection (gboolean concurrent, int *old_next_pin_slot)
 	SGEN_LOG (1, "Start major collection %d", stat_major_gcs);
 	stat_major_gcs++;
 	gc_stats.major_gc_count ++;
+  stat_total_gcs++;
 
 	if (major_collector.start_major_collection)
 		major_collector.start_major_collection ();
@@ -4760,6 +4766,12 @@ mono_gc_set_allow_synchronous_major (gboolean flag)
 
 	allow_synchronous_major = flag;
 	return TRUE;
+}
+
+gint32
+mono_gc_get_object_age (MonoObject *obj)
+{
+  return 5;
 }
 
 void*
