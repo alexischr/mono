@@ -1106,6 +1106,7 @@ mono_gc_clear_domain (MonoDomain * domain)
 			bigobj = bigobj->next;
 			SGEN_LOG (4, "Freeing large object %p", bigobj->data);
 			sgen_los_free_object (to_free);
+      sgen_discard_alloc_cycle(to_free->data);        
 			continue;
 		}
 		prev = bigobj;
@@ -3187,6 +3188,7 @@ major_finish_collection (const char *reason, int old_next_pin_slot, gboolean sca
 			to_free = bigobj;
 			bigobj = bigobj->next;
 			sgen_los_free_object (to_free);
+      sgen_discard_alloc_cycle(&to_free);
 			continue;
 		}
 		prevbo = bigobj;
@@ -4768,13 +4770,37 @@ mono_gc_set_allow_synchronous_major (gboolean flag)
 	return TRUE;
 }
 
+void sgen_record_alloc_cycle (void *obj)
+{
+  sgen_hash_table_replace (&alloc_cycle_hash, obj, &stat_total_gcs, NULL);
+}
+
+void sgen_discard_alloc_cycle (void *obj)
+{
+  sgen_hash_table_remove (&alloc_cycle_hash, obj, NULL);
+}
+
+void sgen_transfer_alloc_cycle_record (void *old, void *new)
+{
+  int *alloc_cycle = sgen_hash_table_lookup (&alloc_cycle_hash, old);
+
+  if (!alloc_cycle) {
+    SGEN_LOG(8, "Alloc cycle record not found for par copied obj: %p -> %p", old, new);
+  } else {
+    // printf("Par copying obj: %p -> %p (gen: %d)\n",  obj, destination, *alloc_cycle);
+    sgen_hash_table_replace (&alloc_cycle_hash, new, alloc_cycle, NULL );
+    sgen_hash_table_remove (&alloc_cycle_hash, old, NULL);
+  }
+
+}
+
 gint32
 mono_gc_get_object_age (MonoObject *obj)
 {
   char* forwarded;
   gint32 *alloc_cycle;
 
-  
+
   if ((forwarded = SGEN_OBJECT_IS_FORWARDED (obj))) { 
     printf("fwd detected %p to %p\n", obj, forwarded);
     obj = (MonoObject*)forwarded;

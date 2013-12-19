@@ -37,23 +37,11 @@ par_copy_object_no_checks (char *destination, MonoVTable *vt, void *obj, mword o
 #ifdef __GNUC__
 	static const void *copy_labels [] = { &&LAB_0, &&LAB_1, &&LAB_2, &&LAB_3, &&LAB_4, &&LAB_5, &&LAB_6, &&LAB_7, &&LAB_8 };
 #endif
-	int *alloc_cycle;
-
 	SGEN_ASSERT (9, vt->klass->inited, "vtable %p for class %s:%s was not initialized", vt, vt->klass->name_space, vt->klass->name);
 	SGEN_LOG (9, " (to %p, %s size: %lu)", destination, ((MonoObject*)obj)->vtable->klass->name, (unsigned long)objsize);
 	binary_protocol_copy (obj, destination, vt, objsize);
 
-	alloc_cycle = sgen_hash_table_lookup (&alloc_cycle_hash, obj);
-
-	if (!alloc_cycle) {
-		SGEN_LOG(9, "Alloc cycle record not found for par copied obj: %p -> %p", obj, destination);
-//		sgen_hash_table_replace (&alloc_cycle_hash, destination, &default_cycle, NULL );
-		
-	} else {
-//		printf("Par copying obj: %p -> %p (gen: %d)\n",  obj, destination, *alloc_cycle);
-		sgen_hash_table_replace (&alloc_cycle_hash, destination, alloc_cycle, NULL );
-	}
-
+	sgen_transfer_alloc_cycle_record (obj, destination);
 
 #ifdef ENABLE_DTRACE
 	if (G_UNLIKELY (MONO_GC_OBJ_MOVED_ENABLED ())) {

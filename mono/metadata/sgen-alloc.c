@@ -226,7 +226,7 @@ mono_gc_alloc_obj_nolock (MonoVTable *vtable, size_t size)
 			g_assert (*p == NULL);
 			mono_atomic_store_seq (p, vtable);	
 
-			sgen_hash_table_replace(&alloc_cycle_hash, p, &stat_total_gcs, NULL);		
+			sgen_record_alloc_cycle(p);
 
 			return p;
 		}

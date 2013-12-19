@@ -495,6 +495,10 @@ typedef struct
 	SgenGrayQueue *queue;
 } ScanCopyContext;
 
+void sgen_record_alloc_cycle (void *obj);
+void sgen_discard_alloc_cycle (void  *obj);
+void sgen_transfer_alloc_cycle_record (void* old, void* new);
+
 void sgen_report_internal_mem_usage (void) MONO_INTERNAL;
 void sgen_dump_internal_mem_usage (FILE *heap_dump_file) MONO_INTERNAL;
 void sgen_dump_section (GCMemSection *section, const char *type) MONO_INTERNAL;
