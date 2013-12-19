@@ -3,8 +3,8 @@
 #include <config.h>
 #include <stdio.h>
 
-#define COMPLEX_ADD_METHOD SN_op_Addition
-#define COMPLEX_MULTIPLY_METHOD SN_op_Multiply
+#define COMPLEX_ADD_METHOD "op_Addition"
+#define COMPLEX_MULTIPLY_METHOD "op_Multiply"
 
 MonoInst*
 mono_emit_complex_intrinsics (MonoCompile *cfg, MonoMethod *cmethod, MonoMethodSignature *fsig, MonoInst **args)
@@ -19,8 +19,10 @@ mono_emit_complex_intrinsics (MonoCompile *cfg, MonoMethod *cmethod, MonoMethodS
 	if (strcmp ("Complex", class_name))
 		return NULL;
 
-	printf("System.Complex op found\n");
+	if (strcmp(COMPLEX_ADD_METHOD, cmethod->name) && strcmp(COMPLEX_MULTIPLY_METHOD, cmethod->name))
+		return NULL;
 
+	// printf("System.Complex intrinsic method found\n");
 	return emit_intrinsics (cfg, cmethod, fsig, args, vector2d_intrinsics, sizeof (vector2d_intrinsics) / sizeof (SimdIntrinsc));
 
 }

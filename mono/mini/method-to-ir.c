@@ -5437,8 +5437,6 @@ mini_emit_inst_for_method (MonoCompile *cfg, MonoMethod *cmethod, MonoMethodSign
 		if (ins)
 			return ins;
 
-		printf("HM! %s::%s::%s\n", cmethod->klass->name_space, cmethod->klass->name, cmethod->name);
-
 		ins = mono_emit_complex_intrinsics (cfg, cmethod, fsig, args);
 		if (ins)
 			return ins;
