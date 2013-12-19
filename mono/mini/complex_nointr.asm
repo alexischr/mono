@@ -31,9 +31,9 @@ LIVENESS 2 Test:.ctor ()
 LIVENESS BLOCK BB1:
 LIVENESS BLOCK BB2:
 LIVENESS BLOCK BB0:
-Method Test:.ctor () emitted at 0x41ed8b40 to 0x41ed8b49 (code length 9) [complex-test.exe]
+Method Test:.ctor () emitted at 0x4110db40 to 0x4110db49 (code length 9) [complex-test.exe]
 
-/tmp/.BSXOMk:     file format elf64-x86-64
+/tmp/.GKh2WN:     file format elf64-x86-64
 
 
 Disassembly of section .text:
@@ -392,9 +392,9 @@ Var R41 live at enter, add range to R41: [1, 10001)
 Var R42 live at enter, add range to R42: [1, 10001)
 Var R46 live at enter, add range to R46: [1, 10001)
 Var R47 live at enter, add range to R47: [1, 10001)
-Method Test:Main () emitted at 0x41ed8b50 to 0x41ed8d48 (code length 504) [complex-test.exe]
+Method Test:Main () emitted at 0x4110db50 to 0x4110dd48 (code length 504) [complex-test.exe]
 
-/tmp/.4QJJ49:     file format elf64-x86-64
+/tmp/.9dHNTy:     file format elf64-x86-64
 
 
 Disassembly of section .text:
@@ -436,7 +436,7 @@ Disassembly of section .text:
   9b:	4c 8b 44 24 28       	mov    0x28(%rsp),%r8
   a0:	48 8b 74 24 30       	mov    0x30(%rsp),%rsi
   a5:	48 8b 54 24 38       	mov    0x38(%rsp),%rdx
-  aa:	e8 01 d2 3e ff       	callq  ffffffffff3ed2b0 <t_Main+0xffffffffff3ed2b0>
+  aa:	e8 01 82 36 ff       	callq  ffffffffff3682b0 <t_Main+0xffffffffff3682b0>
   af:	48 8b 44 24 70       	mov    0x70(%rsp),%rax
   b4:	48 89 44 24 10       	mov    %rax,0x10(%rsp)
   b9:	48 8b 44 24 78       	mov    0x78(%rsp),%rax
@@ -450,7 +450,7 @@ Disassembly of section .text:
   df:	4c 8b 44 24 08       	mov    0x8(%rsp),%r8
   e4:	48 8b 74 24 10       	mov    0x10(%rsp),%rsi
   e9:	48 8b 54 24 18       	mov    0x18(%rsp),%rdx
-  ee:	e8 bd d1 3e ff       	callq  ffffffffff3ed2b0 <t_Main+0xffffffffff3ed2b0>
+  ee:	e8 bd 81 36 ff       	callq  ffffffffff3682b0 <t_Main+0xffffffffff3682b0>
   f3:	f2 0f 10 44 24 50    	movsd  0x50(%rsp),%xmm0
   f9:	f2 0f 10 0d af 00 00 	movsd  0xaf(%rip),%xmm1        # 1b0 <t_Main+0x1b0>
  100:	00 
@@ -519,4 +519,4 @@ Method Test:.ctor () emitted as .Lm_0
 Method Test:Main () emitted as .Lm_1
 Code: 513 Info: 4 Ex Info: 6 Unwind Info: 19 Class Info: 30 PLT: 3 GOT Info: 15 GOT: 56 Offsets: 48
 Compiled: 2/2 (100%), No GOT slots: 2 (100%), Direct calls: 0 (100%)
-JIT time: 25 ms, Generation time: 0 ms, Assembly+Link time: 0 ms.
+JIT time: 62 ms, Generation time: 0 ms, Assembly+Link time: 0 ms.

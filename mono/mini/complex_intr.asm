@@ -31,9 +31,9 @@ LIVENESS 2 Test:.ctor ()
 LIVENESS BLOCK BB1:
 LIVENESS BLOCK BB2:
 LIVENESS BLOCK BB0:
-Method Test:.ctor () emitted at 0x41069b40 to 0x41069b49 (code length 9) [complex-test.exe]
+Method Test:.ctor () emitted at 0x417fab40 to 0x417fab49 (code length 9) [complex-test.exe]
 
-/tmp/.QYqrS6:     file format elf64-x86-64
+/tmp/.MpRqxc:     file format elf64-x86-64
 
 
 Disassembly of section .text:
@@ -250,9 +250,9 @@ Var R20 live at exit, set last_use to 20001
 Var R16 live at enter, add range to R16: [10001, 20001)
 LIVENESS BLOCK BB0:
 Var R16 live at enter, add range to R16: [1, 10001)
-Method Test:Main () emitted at 0x41069b50 to 0x41069cd8 (code length 392) [complex-test.exe]
+Method Test:Main () emitted at 0x417fab50 to 0x417facd8 (code length 392) [complex-test.exe]
 
-/tmp/.PCs62y:     file format elf64-x86-64
+/tmp/.QQIrve:     file format elf64-x86-64
 
 
 Disassembly of section .text:
@@ -355,4 +355,4 @@ Method Test:.ctor () emitted as .Lm_0
 Method Test:Main () emitted as .Lm_1
 Code: 401 Info: 4 Ex Info: 6 Unwind Info: 18 Class Info: 30 PLT: 1 GOT Info: 5 GOT: 40 Offsets: 48
 Compiled: 2/2 (100%), No GOT slots: 2 (100%), Direct calls: 0 (100%)
-JIT time: 24 ms, Generation time: 0 ms, Assembly+Link time: 0 ms.
+JIT time: 55 ms, Generation time: 0 ms, Assembly+Link time: 0 ms.

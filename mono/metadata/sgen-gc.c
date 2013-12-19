@@ -1106,6 +1106,7 @@ mono_gc_clear_domain (MonoDomain * domain)
 			bigobj = bigobj->next;
 			SGEN_LOG (4, "Freeing large object %p", bigobj->data);
 			sgen_los_free_object (to_free);
+      
       sgen_discard_alloc_cycle(to_free->data);        
 			continue;
 		}
@@ -3188,7 +3189,8 @@ major_finish_collection (const char *reason, int old_next_pin_slot, gboolean sca
 			to_free = bigobj;
 			bigobj = bigobj->next;
 			sgen_los_free_object (to_free);
-      sgen_discard_alloc_cycle(&to_free);
+
+      sgen_discard_alloc_cycle(to_free->data);
 			continue;
 		}
 		prevbo = bigobj;
@@ -4777,6 +4779,7 @@ void sgen_record_alloc_cycle (void *obj)
 
 void sgen_discard_alloc_cycle (void *obj)
 {
+  // fprintf(stderr, "discard_alloc_cycle: %p\n", to_free->data);
   sgen_hash_table_remove (&alloc_cycle_hash, obj, NULL);
 }
 
