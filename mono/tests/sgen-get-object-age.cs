@@ -3,36 +3,58 @@ using System.Reflection;
 
 public class Test
 {
-	public static int Main ()
-	{
+    public struct test_struct 
+    {
+        int x;
+        double y;
+    }
 
-		string interned_string = "interned string";
-		String.Intern(interned_string);
+    public class TestClass
+    {
+        public string X { get; set; }
+        public string Y { get; set; }
+}
 
-		string non_interned_string = "non-interned" + "string " + DateTime.Now.ToString();
+    TestClass test_class1  = new TestClass(); 
+    object test_class2;
 
-		var monoExt = new MonoExt();
+    public  int InstanceMethod()
+    {
+        test_class2 = new TestClass();
 
-		Console.WriteLine("non_interned_string age #1: " + monoExt.GetObjectAge (non_interned_string).ToString () );
-		DateTime a_datetime = new DateTime(2000,1,1); 
+        string interned_string = "interned string";
+        String.Intern(interned_string);
 
-		
-		GC.Collect();
-		GC.WaitForPendingFinalizers();
+        string non_interned_string = "non-interned" + "string " + DateTime.Now.ToString();
 
-		var object1 = new object();
+        var monoExt = new MonoExt();
 
-		GC.Collect();
-		GC.WaitForPendingFinalizers();
+        Console.WriteLine("non_interned_string age #1: " + monoExt.GetObjectAge (non_interned_string).ToString () );
+                
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
 
-		var object2 = new object();
+        var object1 = new object();
 
-		Console.WriteLine("a_datetime age: " + monoExt.GetObjectAge (a_datetime).ToString ()); //FIX
-		Console.WriteLine("intern string age: " + monoExt.GetObjectAge (interned_string).ToString () );
-		Console.WriteLine("non_interned_string age #2: " + monoExt.GetObjectAge (non_interned_string).ToString () ); //FIX
-		Console.WriteLine("object1 age: " + monoExt.GetObjectAge (object1).ToString () );
-		Console.WriteLine("object2 age: " + monoExt.GetObjectAge (object2).ToString () );
- 
-		return 0;
-	}
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
+
+        var object2 = new object();
+
+        Console.WriteLine("test_class1 age:  " + monoExt.GetObjectAge (test_class1).ToString ()); 
+        Console.WriteLine("test_class2 age:  " + monoExt.GetObjectAge (test_class2).ToString ()); 
+        Console.WriteLine("interned_string age:" + monoExt.GetObjectAge (interned_string).ToString () );
+        Console.WriteLine("non_interned_string age #2: " + monoExt.GetObjectAge (non_interned_string).ToString () ); //FIX
+        Console.WriteLine("object1 age: " + monoExt.GetObjectAge (object1).ToString () );
+        Console.WriteLine("object2 age: " + monoExt.GetObjectAge (object2).ToString () );
+        Console.WriteLine("typeof (Test) age: " + monoExt.GetObjectAge (typeof (Test)).ToString () );
+
+        return 0;
+    }
+
+
+    public static int Main ()
+    {
+        return new Test().InstanceMethod();
+    }
 }
