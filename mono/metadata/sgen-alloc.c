@@ -224,7 +224,9 @@ mono_gc_alloc_obj_nolock (MonoVTable *vtable, size_t size)
 			if (G_UNLIKELY (MONO_GC_NURSERY_OBJ_ALLOC_ENABLED ()))
 				MONO_GC_NURSERY_OBJ_ALLOC ((mword)p, size, vtable->klass->name_space, vtable->klass->name);
 			g_assert (*p == NULL);
-			mono_atomic_store_seq (p, vtable);			
+			mono_atomic_store_seq (p, vtable);	
+
+			sgen_hash_table_replace(&alloc_cycle_hash, p, &stat_total_gcs, NULL);		
 
 			return p;
 		}
@@ -336,6 +338,8 @@ mono_gc_alloc_obj_nolock (MonoVTable *vtable, size_t size)
 		}
 		mono_atomic_store_seq (p, vtable);
 
+		sgen_hash_table_replace(&alloc_cycle_hash, p, &stat_total_gcs, NULL);
+
 	}
 
 	return p;
@@ -428,6 +432,8 @@ mono_gc_try_alloc_obj_nolock (MonoVTable *vtable, size_t size)
 
 	mono_atomic_store_seq (p, vtable);
 
+	sgen_hash_table_replace(&alloc_cycle_hash, p, &stat_total_gcs, NULL);
+
 	return p;
 }
 
@@ -459,6 +465,8 @@ mono_gc_alloc_obj (MonoVTable *vtable, size_t size)
 	res = mono_gc_try_alloc_obj_nolock (vtable, size);
 	if (res) {
 		EXIT_CRITICAL_REGION;
+	//	fprintf(stderr, "Alloced at %p for %s, gen:%d\n", res, vtable->klass->name, stat_total_gcs);
+		sgen_hash_table_replace(&alloc_cycle_hash, res, &stat_total_gcs, NULL);
 		return res;
 	}
 	EXIT_CRITICAL_REGION;
@@ -469,8 +477,8 @@ mono_gc_alloc_obj (MonoVTable *vtable, size_t size)
 	if (G_UNLIKELY (!res))
 		return mono_gc_out_of_memory (size);
 
+	//fprintf(stderr, "Alloced at %p for %s, gen:%d\n", res, vtable->klass->name, stat_total_gcs);
 	sgen_hash_table_replace(&alloc_cycle_hash, res, &stat_total_gcs, NULL);
-
 	return res;
 }
 
@@ -486,6 +494,7 @@ mono_gc_alloc_vector (MonoVTable *vtable, size_t size, uintptr_t max_length)
 		/*This doesn't require fencing since EXIT_CRITICAL_REGION already does it for us*/
 		arr->max_length = max_length;
 		EXIT_CRITICAL_REGION;
+
 		return arr;
 	}
 	EXIT_CRITICAL_REGION;
@@ -523,6 +532,7 @@ mono_gc_alloc_array (MonoVTable *vtable, size_t size, uintptr_t max_length, uint
 		bounds = (MonoArrayBounds*)((char*)arr + size - bounds_size);
 		arr->bounds = bounds;
 		EXIT_CRITICAL_REGION;
+
 		return arr;
 	}
 	EXIT_CRITICAL_REGION;
@@ -558,6 +568,7 @@ mono_gc_alloc_string (MonoVTable *vtable, size_t size, gint32 len)
 		/*This doesn't require fencing since EXIT_CRITICAL_REGION already does it for us*/
 		str->length = len;
 		EXIT_CRITICAL_REGION;
+
 		return str;
 	}
 	EXIT_CRITICAL_REGION;
@@ -603,8 +614,12 @@ mono_gc_alloc_pinned_obj (MonoVTable *vtable, size_t size)
 		else
 			MONO_GC_MAJOR_OBJ_ALLOC_PINNED ((mword)p, size, vtable->klass->name_space, vtable->klass->name);
 		binary_protocol_alloc_pinned (p, vtable, size);
+
+//		fprintf(stderr, "Alloced pinned at %p for %s, gen:%d\n", p, vtable->klass->name, stat_total_gcs);
+		sgen_hash_table_replace(&alloc_cycle_hash, p, &stat_total_gcs, NULL);
 	}
 	UNLOCK_GC;
+
 	return p;
 }
 
@@ -618,6 +633,9 @@ mono_gc_alloc_mature (MonoVTable *vtable)
 	UNLOCK_GC;
 	if (G_UNLIKELY (vtable->klass->has_finalize))
 		mono_object_register_finalizer ((MonoObject*)res);
+
+//	fprintf(stderr, "Alloced mature at %p for %s, gen:%d\n", res, vtable->klass->name, stat_total_gcs);
+	sgen_hash_table_replace(&alloc_cycle_hash, res, &stat_total_gcs, NULL);
 
 	return res;
 }
@@ -633,6 +651,10 @@ mono_gc_alloc_fixed (size_t size, void *descr)
 		free (res);
 		res = NULL;
 	}
+	
+//	fprintf(stderr, "Alloced fixed at %p, gen:%d\n", &res, stat_total_gcs);
+	sgen_hash_table_replace(&alloc_cycle_hash, &res, &stat_total_gcs, NULL);
+		
 	return res;
 }
 

@@ -324,7 +324,7 @@ static int stat_wbarrier_object_copy = 0;
 
 int stat_minor_gcs = 0;
 int stat_major_gcs = 0;
-guint32 stat_total_gcs = 0;
+gint32 stat_total_gcs = 0;
 
 static long long stat_pinned_objects = 0;
 
@@ -456,7 +456,7 @@ SgenHashTable roots_hash [ROOT_TYPE_NUM] = {
 	SGEN_HASH_TABLE_INIT (INTERNAL_MEM_ROOTS_TABLE, INTERNAL_MEM_ROOT_RECORD, sizeof (RootRecord), mono_aligned_addr_hash, NULL)
 };
 
-SgenHashTable alloc_cycle_hash = SGEN_HASH_TABLE_INIT (INTERNAL_MEM_ALLOC_CYCLE_HASH_TABLE, INTERNAL_MEM_ALLOC_CYCLE_HASH_TABLE_ENTRY, sizeof (guint32), mono_aligned_addr_hash, NULL);
+SgenHashTable alloc_cycle_hash = SGEN_HASH_TABLE_INIT (INTERNAL_MEM_ALLOC_CYCLE_HASH_TABLE, INTERNAL_MEM_ALLOC_CYCLE_HASH_TABLE_ENTRY, sizeof (gint32), mono_aligned_addr_hash, NULL);
 
 static mword roots_size = 0; /* amount of memory in the root set */
 
@@ -4771,7 +4771,28 @@ mono_gc_set_allow_synchronous_major (gboolean flag)
 gint32
 mono_gc_get_object_age (MonoObject *obj)
 {
-  return 5;
+  char* forwarded;
+  gint32 *alloc_cycle;
+
+  
+  if ((forwarded = SGEN_OBJECT_IS_FORWARDED (obj))) { 
+    printf("fwd detected %p to %p\n", obj, forwarded);
+    obj = (MonoObject*)forwarded;
+  }
+
+  printf("mono_gc_get_object_age: %p (current gen:%d)\n", obj, stat_total_gcs);
+
+  alloc_cycle = sgen_hash_table_lookup(&alloc_cycle_hash, obj);
+
+  if (!alloc_cycle) 
+  {
+      if (ptr_on_stack (obj))
+        printf("unknown object on stack!");
+
+    return -1;
+  }
+
+  return (stat_total_gcs - *alloc_cycle);
 }
 
 void*

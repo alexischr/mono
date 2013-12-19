@@ -1249,7 +1249,7 @@ mono_gc_set_allow_synchronous_major (gboolean flag)
 gint32
 mono_gc_get_object_age (MonoObject *obj)
 {
-  return 0;
+  return -1;
 }
 
 #endif /* no Boehm GC */

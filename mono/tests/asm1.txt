@@ -1,0 +1,563 @@
+Mono Ahead of Time compiler - compiling assembly /home/user/mono/mono/tests/complex-test.exe
+converting method Test:.ctor ()
+remove_block_if_useless, removed BB3
+
+LIVENESS:
+BLOCK BB0 (BB2, ):
+GEN  BB0: {}
+KILL BB0: {}
+BLOCK BB2 (BB1, ):
+GEN  BB2: {}
+KILL BB2: {}
+BLOCK BB1 ():
+GEN  BB1: {}
+KILL BB1: {}
+
+ITERATION:
+P: BB1(2): IN: BB2 OUT:
+P: BB2(1): IN: BB0 OUT:BB1 
+	LIVE IN  BB2: {}
+P: BB0(0): IN: OUT:BB2 
+	LIVE IN  BB0: {}
+IT: 3 2.
+LIVE IN  BB1: {}
+LIVE OUT BB1: {}
+LIVE IN  BB2: {}
+LIVE OUT BB2: {}
+LIVE IN  BB0: {}
+LIVE OUT BB0: {}
+V0: [0x0 - 0x0]
+LIVENESS 2 Test:.ctor ()
+LIVENESS BLOCK BB1:
+LIVENESS BLOCK BB2:
+LIVENESS BLOCK BB0:
+Method Test:.ctor () emitted at 0x401cfb40 to 0x401cfb49 (code length 9) [complex-test.exe]
+
+/tmp/.s5PTkS:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <t__ctor>:
+<BB>:1
+   0:	48 83 ec 08          	sub    $0x8,%rsp
+   4:	48 83 c4 08          	add    $0x8,%rsp
+   8:	c3                   	retq   
+converting method Test:Main ()
+HM!
+HM!
+HM!
+HM!
+
+LIVENESS:
+BLOCK BB0 (BB3, ):
+GEN  BB0: {}
+KILL BB0: {}
+BLOCK BB3 (BB4, BB5, ):
+	 ldaddr R68 <- R17
+	GEN: R17(1)
+	 i8const R69 <- [0]
+	 storei8_membase_reg [R68] <- R69
+	 storei8_membase_reg [R68 + 0x8] <- R69
+	 ldaddr R70 <- R18
+	GEN: R18(2)
+	 i8const R71 <- [0]
+	 storei8_membase_reg [R70] <- R71
+	 storei8_membase_reg [R70 + 0x8] <- R71
+	 ldaddr R72 <- R19
+	GEN: R19(3)
+	 i8const R73 <- [0]
+	 storei8_membase_reg [R72] <- R73
+	 storei8_membase_reg [R72 + 0x8] <- R73
+	 ldaddr R74 <- R20
+	GEN: R20(4)
+	 i8const R75 <- [0]
+	 storei8_membase_reg [R74] <- R75
+	 storei8_membase_reg [R74 + 0x8] <- R75
+	 iconst R21 <- [0]
+	KILL: R21(5)
+	 ldaddr R22 <- R17
+	GEN: R17(1)
+	 r8const R29 <- [1.000000]
+	 storer8_membase_reg [R22] <- R29
+	 r8const R31 <- [2.000000]
+	 storer8_membase_reg [R22 + 0x8] <- R31
+	 ldaddr R32 <- R18
+	GEN: R18(2)
+	 r8const R39 <- [3.000000]
+	 storer8_membase_reg [R32] <- R39
+	 r8const R41 <- [4.000000]
+	 storer8_membase_reg [R32 + 0x8] <- R41
+	 ldaddr R76 <- R17
+	GEN: R17(1)
+	 ldaddr R77 <- R42
+	GEN: R42(6)
+	 loadi8_membase R78 <- [R76 + 0x0]
+	 storei8_membase_reg [R77] <- R78
+	 loadi8_membase R79 <- [R76 + 0x8]
+	 storei8_membase_reg [R77 + 0x8] <- R79
+	 ldaddr R80 <- R18
+	GEN: R18(2)
+	 ldaddr R81 <- R43
+	GEN: R43(7)
+	 loadi8_membase R82 <- [R80 + 0x0]
+	 storei8_membase_reg [R81] <- R82
+	 loadi8_membase R83 <- [R80 + 0x8]
+	 storei8_membase_reg [R81 + 0x8] <- R83
+	 ldaddr R45 <- R19
+	GEN: R19(3)
+	 ldaddr R85 <- R43
+	GEN: R43(7)
+	 load_membase R86 <- [R85 + 0x0]
+	 move R87 <- R86
+	 load_membase R88 <- [R85 + 0x8]
+	 move R89 <- R88
+	 ldaddr R90 <- R42
+	GEN: R42(6)
+	 load_membase R91 <- [R90 + 0x0]
+	 move R92 <- R91
+	 load_membase R93 <- [R90 + 0x8]
+	 move R94 <- R93
+	 move R46 <- R45
+	 vcall2 [Complex:op_Addition (Complex,Complex)] [%rdi <- R46] [%rcx <- R87] [%r8 <- R89] [%rsi <- R92] [%rdx <- R94] clobbers: c
+	 ldaddr R95 <- R17
+	GEN: R17(1)
+	 ldaddr R96 <- R47
+	GEN: R47(8)
+	 loadi8_membase R97 <- [R95 + 0x0]
+	 storei8_membase_reg [R96] <- R97
+	 loadi8_membase R98 <- [R95 + 0x8]
+	 storei8_membase_reg [R96 + 0x8] <- R98
+	 ldaddr R99 <- R18
+	GEN: R18(2)
+	 ldaddr R100 <- R48
+	GEN: R48(9)
+	 loadi8_membase R101 <- [R99 + 0x0]
+	 storei8_membase_reg [R100] <- R101
+	 loadi8_membase R102 <- [R99 + 0x8]
+	 storei8_membase_reg [R100 + 0x8] <- R102
+	 ldaddr R50 <- R20
+	GEN: R20(4)
+	 ldaddr R104 <- R48
+	GEN: R48(9)
+	 load_membase R105 <- [R104 + 0x0]
+	 move R106 <- R105
+	 load_membase R107 <- [R104 + 0x8]
+	 move R108 <- R107
+	 ldaddr R109 <- R47
+	GEN: R47(8)
+	 load_membase R110 <- [R109 + 0x0]
+	 move R111 <- R110
+	 load_membase R112 <- [R109 + 0x8]
+	 move R113 <- R112
+	 move R51 <- R50
+	 vcall2 [Complex:op_Multiply (Complex,Complex)] [%rdi <- R51] [%rcx <- R106] [%r8 <- R108] [%rsi <- R111] [%rdx <- R113] clobbers: c
+	 ldaddr R52 <- R19
+	GEN: R19(3)
+	 loadr8_membase R53 <- [R52 + 0x0]
+	 r8const R54 <- [4.000000]
+	 fcompare R53 R54 clobbers: a
+	 float_bne_un
+GEN  BB3: {1, 2, 3, 4, 6, 7, 8, 9}
+KILL BB3: {5}
+BLOCK BB4 (BB7, ):
+	 iconst R21 <- [-1]
+	KILL: R21(5)
+	 br [B7]
+GEN  BB4: {}
+KILL BB4: {5}
+BLOCK BB7 (BB1, ):
+	 move R16 <- R21
+	GEN: R21(5)
+	KILL: R16(0)
+GEN  BB7: {5}
+KILL BB7: {0}
+BLOCK BB1 ():
+GEN  BB1: {}
+KILL BB1: {}
+BLOCK BB5 (BB6, BB4, ):
+	 ldaddr R55 <- R19
+	GEN: R19(3)
+	 loadr8_membase R56 <- [R55 + 0x8]
+	 r8const R57 <- [6.000000]
+	 fcompare R56 R57 clobbers: a
+	 float_beq
+GEN  BB5: {3}
+KILL BB5: {}
+BLOCK BB6 (BB8, BB9, ):
+	 ldaddr R59 <- R20
+	GEN: R20(4)
+	 loadr8_membase R60 <- [R59 + 0x0]
+	 r8const R61 <- [3.000000]
+	 fcompare R60 R61 clobbers: a
+	 float_bne_un
+GEN  BB6: {4}
+KILL BB6: {}
+BLOCK BB8 (BB7, ):
+	 iconst R21 <- [-1]
+	KILL: R21(5)
+	 br [B7]
+GEN  BB8: {}
+KILL BB8: {5}
+BLOCK BB9 (BB10, BB8, ):
+	 ldaddr R62 <- R20
+	GEN: R20(4)
+	 loadr8_membase R63 <- [R62 + 0x8]
+	 r8const R64 <- [8.000000]
+	 fcompare R63 R64 clobbers: a
+	 float_beq
+GEN  BB9: {4}
+KILL BB9: {}
+BLOCK BB10 (BB7, ):
+	 iconst R21 <- [0]
+	KILL: R21(5)
+GEN  BB10: {}
+KILL BB10: {5}
+
+ITERATION:
+P: BB10(9): IN: BB9 OUT:BB7 
+	LIVE IN  BB10: {}
+P: BB9(8): IN: BB6 OUT:BB10 BB8 
+	LIVE IN  BB9: {4}
+P: BB8(7): IN: BB6 BB9 OUT:BB7 
+	ADD: 9
+	LIVE IN  BB8: {}
+P: BB9(8): IN: BB6 OUT:BB10 BB8 
+	LIVE IN  BB9: {4}
+P: BB6(6): IN: BB5 OUT:BB8 BB9 
+	LIVE IN  BB6: {4}
+P: BB5(5): IN: BB3 OUT:BB6 BB4 
+	LIVE IN  BB5: {3, 4}
+P: BB1(4): IN: BB7 OUT:
+P: BB7(3): IN: BB4 BB8 BB10 OUT:BB1 
+	LIVE IN  BB7: {5}
+P: BB4(2): IN: BB5 BB3 OUT:BB7 
+	ADD: 5
+	LIVE IN  BB4: {}
+P: BB5(5): IN: BB3 OUT:BB6 BB4 
+	LIVE IN  BB5: {3, 4}
+P: BB3(1): IN: BB0 OUT:BB4 BB5 
+	LIVE IN  BB3: {1, 2, 3, 4, 6, 7, 8, 9}
+P: BB0(0): IN: OUT:BB3 
+	LIVE IN  BB0: {1, 2, 3, 4, 6, 7, 8, 9}
+IT: 10 11.
+LIVE IN  BB10: {}
+LIVE OUT BB10: {5}
+LIVE IN  BB9: {4}
+LIVE OUT BB9: {}
+LIVE IN  BB8: {}
+LIVE OUT BB8: {5}
+LIVE IN  BB6: {4}
+LIVE OUT BB6: {4}
+LIVE IN  BB5: {3, 4}
+LIVE OUT BB5: {4}
+LIVE IN  BB1: {}
+LIVE OUT BB1: {}
+LIVE IN  BB7: {5}
+LIVE OUT BB7: {}
+LIVE IN  BB4: {}
+LIVE OUT BB4: {5}
+LIVE IN  BB3: {1, 2, 3, 4, 6, 7, 8, 9}
+LIVE OUT BB3: {3, 4}
+LIVE IN  BB0: {1, 2, 3, 4, 6, 7, 8, 9}
+LIVE OUT BB0: {1, 2, 3, 4, 6, 7, 8, 9}
+V0: [0x0 - 0x30001]
+V1: [0x0 - 0x10068]
+V2: [0x0 - 0x10074]
+V3: [0x0 - 0x50000]
+V4: [0x0 - 0x80000]
+V5: [0x10021 - 0x9ffff]
+V6: [0x0 - 0x1005a]
+V7: [0x0 - 0x10050]
+V8: [0x0 - 0x1008c]
+V9: [0x0 - 0x10082]
+LIVENESS 2 Test:Main ()
+LIVENESS BLOCK BB10:
+Var R21 live at exit, set last_use to 9ffff
+	90002:  iconst R21 <- [0]
+	add range to R21: [90002, 9ffff)
+Var R16 live at enter, add range to R16: [90001, 9ffff)
+LIVENESS BLOCK BB9:
+	80006:  float_beq
+	80005:  fcompare R63 R64 clobbers: a
+	80004:  r8const R64 <- [8.000000]
+	80003:  loadr8_membase R63 <- [R62 + 0x8]
+	80002:  ldaddr R62 <- R20
+Var R16 live at enter, add range to R16: [80001, 90001)
+LIVENESS BLOCK BB8:
+Var R21 live at exit, set last_use to 80001
+	70003:  br [B7]
+	70002:  iconst R21 <- [-1]
+	add range to R21: [70002, 80001)
+Var R16 live at enter, add range to R16: [70001, 80001)
+LIVENESS BLOCK BB6:
+Var R20 live at exit, set last_use to 70001
+	60006:  float_bne_un
+	60005:  fcompare R60 R61 clobbers: a
+	60004:  r8const R61 <- [3.000000]
+	60003:  loadr8_membase R60 <- [R59 + 0x0]
+	60002:  ldaddr R59 <- R20
+Var R16 live at enter, add range to R16: [60001, 70001)
+Var R20 live at enter, add range to R20: [60001, 70001)
+LIVENESS BLOCK BB5:
+Var R20 live at exit, set last_use to 60001
+	50006:  float_beq
+	50005:  fcompare R56 R57 clobbers: a
+	50004:  r8const R57 <- [6.000000]
+	50003:  loadr8_membase R56 <- [R55 + 0x8]
+	50002:  ldaddr R55 <- R19
+Var R16 live at enter, add range to R16: [50001, 60001)
+Var R20 live at enter, add range to R20: [50001, 60001)
+LIVENESS BLOCK BB1:
+Var R16 live at enter, add range to R16: [40001, 50001)
+LIVENESS BLOCK BB7:
+	30002:  move R16 <- R21
+	add range to R16: [30002, 40001)
+	last use of R21 set to 30002
+Var R21 live at enter, add range to R21: [30001, 30002)
+LIVENESS BLOCK BB4:
+Var R21 live at exit, set last_use to 30001
+	20003:  br [B7]
+	20002:  iconst R21 <- [-1]
+	add range to R21: [20002, 30001)
+Var R16 live at enter, add range to R16: [20001, 30001)
+LIVENESS BLOCK BB3:
+Var R19 live at exit, set last_use to 20001
+Var R20 live at exit, set last_use to 20001
+	10053:  float_bne_un
+	10052:  fcompare R53 R54 clobbers: a
+	10051:  r8const R54 <- [4.000000]
+	10050:  loadr8_membase R53 <- [R52 + 0x0]
+	1004f:  ldaddr R52 <- R19
+	1004e:  vcall2 [Complex:op_Multiply (Complex,Complex)] [%rdi <- R51] [%rcx <- R106] [%r8 <- R108] [%rsi <- R111] [%rdx <- R113] clobbers: c
+	1004d:  move R51 <- R50
+	1004c:  move R113 <- R112
+	1004b:  load_membase R112 <- [R109 + 0x8]
+	1004a:  move R111 <- R110
+	10049:  load_membase R110 <- [R109 + 0x0]
+	10048:  ldaddr R109 <- R47
+	10047:  move R108 <- R107
+	10046:  load_membase R107 <- [R104 + 0x8]
+	10045:  move R106 <- R105
+	10044:  load_membase R105 <- [R104 + 0x0]
+	10043:  ldaddr R104 <- R48
+	10042:  ldaddr R50 <- R20
+	10041:  storei8_membase_reg [R100 + 0x8] <- R102
+	10040:  loadi8_membase R102 <- [R99 + 0x8]
+	1003f:  storei8_membase_reg [R100] <- R101
+	1003e:  loadi8_membase R101 <- [R99 + 0x0]
+	1003d:  ldaddr R100 <- R48
+	1003c:  ldaddr R99 <- R18
+	1003b:  storei8_membase_reg [R96 + 0x8] <- R98
+	1003a:  loadi8_membase R98 <- [R95 + 0x8]
+	10039:  storei8_membase_reg [R96] <- R97
+	10038:  loadi8_membase R97 <- [R95 + 0x0]
+	10037:  ldaddr R96 <- R47
+	10036:  ldaddr R95 <- R17
+	10035:  vcall2 [Complex:op_Addition (Complex,Complex)] [%rdi <- R46] [%rcx <- R87] [%r8 <- R89] [%rsi <- R92] [%rdx <- R94] clobbers: c
+	10034:  move R46 <- R45
+	10033:  move R94 <- R93
+	10032:  load_membase R93 <- [R90 + 0x8]
+	10031:  move R92 <- R91
+	10030:  load_membase R91 <- [R90 + 0x0]
+	1002f:  ldaddr R90 <- R42
+	1002e:  move R89 <- R88
+	1002d:  load_membase R88 <- [R85 + 0x8]
+	1002c:  move R87 <- R86
+	1002b:  load_membase R86 <- [R85 + 0x0]
+	1002a:  ldaddr R85 <- R43
+	10029:  ldaddr R45 <- R19
+	10028:  storei8_membase_reg [R81 + 0x8] <- R83
+	10027:  loadi8_membase R83 <- [R80 + 0x8]
+	10026:  storei8_membase_reg [R81] <- R82
+	10025:  loadi8_membase R82 <- [R80 + 0x0]
+	10024:  ldaddr R81 <- R43
+	10023:  ldaddr R80 <- R18
+	10022:  storei8_membase_reg [R77 + 0x8] <- R79
+	10021:  loadi8_membase R79 <- [R76 + 0x8]
+	10020:  storei8_membase_reg [R77] <- R78
+	1001f:  loadi8_membase R78 <- [R76 + 0x0]
+	1001e:  ldaddr R77 <- R42
+	1001d:  ldaddr R76 <- R17
+	1001c:  storer8_membase_reg [R32 + 0x8] <- R41
+	1001b:  r8const R41 <- [4.000000]
+	1001a:  storer8_membase_reg [R32] <- R39
+	10019:  r8const R39 <- [3.000000]
+	10018:  ldaddr R32 <- R18
+	10017:  storer8_membase_reg [R22 + 0x8] <- R31
+	10016:  r8const R31 <- [2.000000]
+	10015:  storer8_membase_reg [R22] <- R29
+	10014:  r8const R29 <- [1.000000]
+	10013:  ldaddr R22 <- R17
+	10012:  nop
+	10011:  storei8_membase_reg [R74 + 0x8] <- R75
+	10010:  storei8_membase_reg [R74] <- R75
+	1000f:  i8const R75 <- [0]
+	1000e:  ldaddr R74 <- R20
+	1000d:  storei8_membase_reg [R72 + 0x8] <- R73
+	1000c:  storei8_membase_reg [R72] <- R73
+	1000b:  i8const R73 <- [0]
+	1000a:  ldaddr R72 <- R19
+	10009:  storei8_membase_reg [R70 + 0x8] <- R71
+	10008:  storei8_membase_reg [R70] <- R71
+	10007:  i8const R71 <- [0]
+	10006:  ldaddr R70 <- R18
+	10005:  storei8_membase_reg [R68 + 0x8] <- R69
+	10004:  storei8_membase_reg [R68] <- R69
+	10003:  i8const R69 <- [0]
+	10002:  ldaddr R68 <- R17
+Var R16 live at enter, add range to R16: [10001, 20001)
+Var R19 live at enter, add range to R19: [10001, 20001)
+Var R20 live at enter, add range to R20: [10001, 20001)
+LIVENESS BLOCK BB0:
+Var R17 live at exit, set last_use to 10001
+Var R18 live at exit, set last_use to 10001
+Var R19 live at exit, set last_use to 10001
+Var R20 live at exit, set last_use to 10001
+Var R42 live at exit, set last_use to 10001
+Var R43 live at exit, set last_use to 10001
+Var R47 live at exit, set last_use to 10001
+Var R48 live at exit, set last_use to 10001
+Var R16 live at enter, add range to R16: [1, 10001)
+Var R17 live at enter, add range to R17: [1, 10001)
+Var R18 live at enter, add range to R18: [1, 10001)
+Var R19 live at enter, add range to R19: [1, 10001)
+Var R20 live at enter, add range to R20: [1, 10001)
+Var R42 live at enter, add range to R42: [1, 10001)
+Var R43 live at enter, add range to R43: [1, 10001)
+Var R47 live at enter, add range to R47: [1, 10001)
+Var R48 live at enter, add range to R48: [1, 10001)
+Method Test:Main () emitted at 0x401cfb50 to 0x401cfd68 (code length 536) [complex-test.exe]
+
+/tmp/.MkbKwU:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <t_Main>:
+<BB>:3
+   0:	48 81 ec 88 00 00 00 	sub    $0x88,%rsp
+   7:	4c 89 3c 24          	mov    %r15,(%rsp)
+   b:	33 c0                	xor    %eax,%eax
+   d:	48 89 44 24 78       	mov    %rax,0x78(%rsp)
+  12:	48 89 84 24 80 00 00 	mov    %rax,0x80(%rsp)
+  19:	00 
+  1a:	48 89 44 24 68       	mov    %rax,0x68(%rsp)
+  1f:	48 89 44 24 70       	mov    %rax,0x70(%rsp)
+  24:	48 89 44 24 58       	mov    %rax,0x58(%rsp)
+  29:	48 89 44 24 60       	mov    %rax,0x60(%rsp)
+  2e:	48 89 44 24 48       	mov    %rax,0x48(%rsp)
+  33:	48 89 44 24 50       	mov    %rax,0x50(%rsp)
+  38:	f2 0f 10 05 d0 01 00 	movsd  0x1d0(%rip),%xmm0        # 210 <t_Main+0x210>
+  3f:	00 
+  40:	f2 0f 11 44 24 78    	movsd  %xmm0,0x78(%rsp)
+  46:	f2 0f 10 05 b2 01 00 	movsd  0x1b2(%rip),%xmm0        # 200 <t_Main+0x200>
+  4d:	00 
+  4e:	f2 0f 11 84 24 80 00 	movsd  %xmm0,0x80(%rsp)
+  55:	00 00 
+  57:	f2 0f 10 05 91 01 00 	movsd  0x191(%rip),%xmm0        # 1f0 <t_Main+0x1f0>
+  5e:	00 
+  5f:	f2 0f 11 44 24 68    	movsd  %xmm0,0x68(%rsp)
+  65:	f2 0f 10 05 73 01 00 	movsd  0x173(%rip),%xmm0        # 1e0 <t_Main+0x1e0>
+  6c:	00 
+  6d:	f2 0f 11 44 24 70    	movsd  %xmm0,0x70(%rsp)
+  73:	48 8b 44 24 78       	mov    0x78(%rsp),%rax
+  78:	48 89 44 24 38       	mov    %rax,0x38(%rsp)
+  7d:	48 8b 84 24 80 00 00 	mov    0x80(%rsp),%rax
+  84:	00 
+  85:	48 89 44 24 40       	mov    %rax,0x40(%rsp)
+  8a:	48 8b 44 24 68       	mov    0x68(%rsp),%rax
+  8f:	48 89 44 24 28       	mov    %rax,0x28(%rsp)
+  94:	48 8b 44 24 70       	mov    0x70(%rsp),%rax
+  99:	48 89 44 24 30       	mov    %rax,0x30(%rsp)
+  9e:	48 8d 7c 24 58       	lea    0x58(%rsp),%rdi
+  a3:	48 8b 4c 24 28       	mov    0x28(%rsp),%rcx
+  a8:	4c 8b 44 24 30       	mov    0x30(%rsp),%r8
+  ad:	48 8b 74 24 38       	mov    0x38(%rsp),%rsi
+  b2:	48 8b 54 24 40       	mov    0x40(%rsp),%rdx
+  b7:	e8 d4 c1 99 fd       	callq  fffffffffd99c290 <t_Main+0xfffffffffd99c290>
+  bc:	48 8b 44 24 78       	mov    0x78(%rsp),%rax
+  c1:	48 89 44 24 18       	mov    %rax,0x18(%rsp)
+  c6:	48 8b 84 24 80 00 00 	mov    0x80(%rsp),%rax
+  cd:	00 
+  ce:	48 89 44 24 20       	mov    %rax,0x20(%rsp)
+  d3:	48 8b 44 24 68       	mov    0x68(%rsp),%rax
+  d8:	48 89 44 24 08       	mov    %rax,0x8(%rsp)
+  dd:	48 8b 44 24 70       	mov    0x70(%rsp),%rax
+  e2:	48 89 44 24 10       	mov    %rax,0x10(%rsp)
+  e7:	48 8d 7c 24 48       	lea    0x48(%rsp),%rdi
+  ec:	48 8b 4c 24 08       	mov    0x8(%rsp),%rcx
+  f1:	4c 8b 44 24 10       	mov    0x10(%rsp),%r8
+  f6:	48 8b 74 24 18       	mov    0x18(%rsp),%rsi
+  fb:	48 8b 54 24 20       	mov    0x20(%rsp),%rdx
+ 100:	e8 8b c1 99 fd       	callq  fffffffffd99c290 <t_Main+0xfffffffffd99c290>
+ 105:	f2 0f 10 44 24 58    	movsd  0x58(%rsp),%xmm0
+ 10b:	f2 0f 10 0d bd 00 00 	movsd  0xbd(%rip),%xmm1        # 1d0 <t_Main+0x1d0>
+ 112:	00 
+ 113:	66 0f 2f c8          	comisd %xmm0,%xmm1
+ 117:	0f 85 22 00 00 00    	jne    13f <t_Main+0x13f>
+ 11d:	0f 8a 1c 00 00 00    	jp     13f <t_Main+0x13f>
+ 123:	0f 82 16 00 00 00    	jb     13f <t_Main+0x13f>
+<BB>:5
+ 129:	f2 0f 10 44 24 60    	movsd  0x60(%rsp),%xmm0
+ 12f:	f2 0f 10 0d 89 00 00 	movsd  0x89(%rip),%xmm1        # 1c0 <t_Main+0x1c0>
+ 136:	00 
+ 137:	66 0f 2f c8          	comisd %xmm0,%xmm1
+ 13b:	7a 02                	jp     13f <t_Main+0x13f>
+ 13d:	74 0f                	je     14e <t_Main+0x14e>
+<BB>:4
+ 13f:	49 bf ff ff ff ff ff 	movabs $0xffffffffffffffff,%r15
+ 146:	ff ff ff 
+ 149:	e9 3d 00 00 00       	jmpq   18b <t_Main+0x18b>
+<BB>:6
+ 14e:	f2 0f 10 44 24 48    	movsd  0x48(%rsp),%xmm0
+ 154:	f2 0f 10 0d 54 00 00 	movsd  0x54(%rip),%xmm1        # 1b0 <t_Main+0x1b0>
+ 15b:	00 
+ 15c:	66 0f 2f c8          	comisd %xmm0,%xmm1
+ 160:	75 1a                	jne    17c <t_Main+0x17c>
+ 162:	7a 18                	jp     17c <t_Main+0x17c>
+ 164:	72 16                	jb     17c <t_Main+0x17c>
+<BB>:9
+ 166:	f2 0f 10 44 24 50    	movsd  0x50(%rsp),%xmm0
+ 16c:	f2 0f 10 0d 2c 00 00 	movsd  0x2c(%rip),%xmm1        # 1a0 <t_Main+0x1a0>
+ 173:	00 
+ 174:	66 0f 2f c8          	comisd %xmm0,%xmm1
+ 178:	7a 02                	jp     17c <t_Main+0x17c>
+ 17a:	74 0c                	je     188 <t_Main+0x188>
+<BB>:8
+ 17c:	49 bf ff ff ff ff ff 	movabs $0xffffffffffffffff,%r15
+ 183:	ff ff ff 
+ 186:	eb 03                	jmp    18b <t_Main+0x18b>
+<BB>:10
+ 188:	45 33 ff             	xor    %r15d,%r15d
+<BB>:7
+ 18b:	49 8b c7             	mov    %r15,%rax
+<BB>:1
+ 18e:	4c 8b 3c 24          	mov    (%rsp),%r15
+ 192:	48 81 c4 88 00 00 00 	add    $0x88,%rsp
+ 199:	c3                   	retq   
+	...
+ 1a6:	20 40 00             	and    %al,0x0(%rax)
+	...
+ 1b5:	00 08                	add    %cl,(%rax)
+ 1b7:	40 00 00             	add    %al,(%rax)
+	...
+ 1c6:	18 40 00             	sbb    %al,0x0(%rax)
+	...
+ 1d5:	00 10                	add    %dl,(%rax)
+ 1d7:	40 00 00             	add    %al,(%rax)
+	...
+ 1e6:	10 40 00             	adc    %al,0x0(%rax)
+	...
+ 1f5:	00 08                	add    %cl,(%rax)
+ 1f7:	40 00 00             	add    %al,(%rax)
+	...
+ 206:	00 40 00             	add    %al,0x0(%rax)
+	...
+ 215:	00 f0                	add    %dh,%al
+ 217:	3f                   	(bad)  
+Method Test:.ctor () emitted as .Lm_0
+Method Test:Main () emitted as .Lm_1
+Code: 545 Info: 4 Ex Info: 6 Unwind Info: 22 Class Info: 30 PLT: 3 GOT Info: 15 GOT: 56 Offsets: 48
+Compiled: 2/2 (100%), No GOT slots: 2 (100%), Direct calls: 0 (100%)
+JIT time: 30 ms, Generation time: 0 ms, Assembly+Link time: 0 ms.

@@ -1003,7 +1003,7 @@ extern __thread char *stack_end;
 
 extern GCMemSection *nursery_section;
 extern int stat_major_gcs;
-extern guint32 stat_total_gcs;
+extern gint32 stat_total_gcs;
 extern guint32 collect_before_allocs;
 extern guint32 verify_before_allocs;
 extern gboolean has_per_allocation_action;

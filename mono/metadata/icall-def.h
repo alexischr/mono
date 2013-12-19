@@ -59,9 +59,6 @@ ICALL(KPAIR_4, "_ProtectMachine", ves_icall_Mono_Security_Cryptography_KeyPairPe
 ICALL(KPAIR_5, "_ProtectUser", ves_icall_Mono_Security_Cryptography_KeyPairPersistence_ProtectUser)
 #endif /* !PLATFORM_RO_FS */
 
-ICALL_TYPE(MONOEXT, "MonoExt", MONOEXT_1)
-ICALL(MONOEXT_1, "GetObjectAge", ves_icall_MonoExt_GetObjectAge)
-
 ICALL_TYPE(ACTIV, "System.Activator", ACTIV_1)
 ICALL(ACTIV_1, "CreateInstanceInternal", ves_icall_System_Activator_CreateInstanceInternal)
 
@@ -404,6 +401,9 @@ ICALL(MCATTR_3, "IsDefinedInternal", custom_attrs_defined_internal)
 
 ICALL_TYPE(MENUM, "System.MonoEnumInfo", MENUM_1)
 ICALL(MENUM_1, "get_enum_info", ves_icall_get_enum_info)
+
+ICALL_TYPE(MONOEXT, "System.MonoExt", MONOEXT_1)
+ICALL(MONOEXT_1, "GetObjectAge", ves_icall_MonoExt_GetObjectAge)
 
 ICALL_TYPE(MTYPE, "System.MonoType", MTYPE_1)
 ICALL(MTYPE_1, "GetArrayRank", ves_icall_MonoType_GetArrayRank)

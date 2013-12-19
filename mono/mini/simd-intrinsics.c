@@ -1677,4 +1677,7 @@ mono_emit_simd_intrinsics (MonoCompile *cfg, MonoMethod *cmethod, MonoMethodSign
 	return NULL;
 }
 
+/*System.Complex uses simd intrinsics */
+#include "complex-type-intrinsics.c"
+
 #endif

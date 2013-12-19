@@ -41,6 +41,7 @@
 #include "metadata/sgen-layout-stats.h"
 #include "metadata/gc-internal.h"
 
+
 #if !defined(SGEN_PARALLEL_MARK) && !defined(FIXED_HEAP)
 #define SGEN_HAVE_CONCURRENT_MARK
 #endif
@@ -755,7 +756,7 @@ alloc_obj (MonoVTable *vtable, int size, gboolean pinned, gboolean has_reference
 static void*
 major_alloc_object (MonoVTable *vtable, int size, gboolean has_references)
 {
-	return alloc_obj (vtable, size, FALSE, has_references);
+	 return alloc_obj (vtable, size, FALSE, has_references);
 }
 
 /*
