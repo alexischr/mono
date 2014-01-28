@@ -4779,8 +4779,8 @@ void sgen_record_alloc_cycle (void *obj)
 
 void sgen_discard_alloc_cycle (void *obj)
 {
-  // fprintf(stderr, "discard_alloc_cycle: %p\n", to_free->data);
-  sgen_hash_table_remove (&alloc_cycle_hash, obj, NULL);
+  if (!sgen_hash_table_remove (&alloc_cycle_hash, obj, NULL))
+    fprintf(stderr, "Alloc cycle record not found: %p\n", obj);  
 }
 
 void sgen_transfer_alloc_cycle_record (void *old, void *new)
@@ -4805,21 +4805,22 @@ mono_gc_get_object_age (MonoObject *obj)
 
 
   if ((forwarded = SGEN_OBJECT_IS_FORWARDED (obj))) { 
-    printf("fwd detected %p to %p\n", obj, forwarded);
+    printf ("fwd detected %p to %p\n", obj, forwarded);
     obj = (MonoObject*)forwarded;
   }
 
-  printf("mono_gc_get_object_age: %p (current gen:%d)\n", obj, stat_total_gcs);
+  printf ("mono_gc_get_object_age: %p (current gen:%d)\n", obj, stat_total_gcs);
 
-  alloc_cycle = sgen_hash_table_lookup(&alloc_cycle_hash, obj);
+  alloc_cycle = sgen_hash_table_lookup (&alloc_cycle_hash, obj);
 
   if (!alloc_cycle) 
   {
       if (ptr_on_stack (obj))
-        printf("unknown object on stack!");
+        printf ("mono_gc_get_object_age: unknown object on stack!");
 
     return -1;
   }
+  printf ("alloc_cycle from hash: %d\n", *alloc_cycle);
 
   return (stat_total_gcs - *alloc_cycle);
 }

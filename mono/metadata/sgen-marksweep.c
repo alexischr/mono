@@ -788,6 +788,7 @@ free_object (char *obj, size_t size, gboolean pinned)
 	memset (obj, 0, size);
 	*(void**)obj = block->free_list;
 	block->free_list = (void**)obj;
+	sgen_discard_alloc_cycle(obj);
 }
 
 static void
