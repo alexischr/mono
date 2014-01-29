@@ -9,17 +9,16 @@ public class Test
 		Complex obj1 = new Complex(1,2);
 		Complex obj2 = new Complex(3,4);
 
-		//Complex objSum = obj1 + obj2;
-		Complex objMul = obj1 * obj2;
+		Complex objSum,objMul;
 
-		//Console.WriteLine("(1+2i) + (3+4i) = {0} + {1}i", objSum.a, objSum.b);
-		Console.WriteLine("(1+2i) * (3+4i) = {0} + {1}i", objMul.a, objMul.b);
+		objSum = obj1 + obj2;
+		objMul = obj1 * obj2;
 
-		/*if (objSum.a != 4 || objSum.b != 6)
+		if (objSum.a != 4 || objSum.b != 6)
 			return -1;
 
 		if (objMul.a != -5 || objMul.b != 10)
-			return -1; */
+			return -1; 
 
 		return 0;
 	}

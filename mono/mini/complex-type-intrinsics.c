@@ -6,15 +6,6 @@
 #define COMPLEX_ADD_METHOD "op_Addition"
 #define COMPLEX_MULTIPLY_METHOD "op_Multiply"
 
-
-/* MonoInst* complex_emit_multiply_intrinsics (MonoCompile *cfg, MonoMethod *cmethod, MonoMethodSignature *fsig, MonoInst **args)
-{
-
-
-
-
-} */
-
 MonoInst*
 mono_emit_complex_intrinsics (MonoCompile *cfg, MonoMethod *cmethod, MonoMethodSignature *fsig, MonoInst **args)
 {
@@ -29,8 +20,7 @@ mono_emit_complex_intrinsics (MonoCompile *cfg, MonoMethod *cmethod, MonoMethodS
 		return NULL;
 
 	if (!strcmp(COMPLEX_ADD_METHOD, cmethod->name))
-		return NULL;
-
+		return emit_intrinsics (cfg, cmethod, fsig, args, vector2d_intrinsics, sizeof (vector2d_intrinsics) / sizeof (SimdIntrinsc));
 
 	if (!strcmp(COMPLEX_MULTIPLY_METHOD, cmethod->name))
 	{

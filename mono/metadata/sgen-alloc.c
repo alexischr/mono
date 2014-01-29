@@ -338,8 +338,7 @@ mono_gc_alloc_obj_nolock (MonoVTable *vtable, size_t size)
 		}
 		mono_atomic_store_seq (p, vtable);
 
-		sgen_hash_table_replace(&alloc_cycle_hash, p, &stat_total_gcs, NULL);
-
+		sgen_record_alloc_cycle(p);
 	}
 
 	return p;
@@ -432,7 +431,7 @@ mono_gc_try_alloc_obj_nolock (MonoVTable *vtable, size_t size)
 
 	mono_atomic_store_seq (p, vtable);
 
-	sgen_hash_table_replace(&alloc_cycle_hash, p, &stat_total_gcs, NULL);
+	sgen_record_alloc_cycle(p);
 
 	return p;
 }
@@ -465,8 +464,6 @@ mono_gc_alloc_obj (MonoVTable *vtable, size_t size)
 	res = mono_gc_try_alloc_obj_nolock (vtable, size);
 	if (res) {
 		EXIT_CRITICAL_REGION;
-	//	fprintf(stderr, "Alloced at %p for %s, gen:%d\n", res, vtable->klass->name, stat_total_gcs);
-		sgen_hash_table_replace(&alloc_cycle_hash, res, &stat_total_gcs, NULL);
 		return res;
 	}
 	EXIT_CRITICAL_REGION;
@@ -477,8 +474,6 @@ mono_gc_alloc_obj (MonoVTable *vtable, size_t size)
 	if (G_UNLIKELY (!res))
 		return mono_gc_out_of_memory (size);
 
-	//fprintf(stderr, "Alloced at %p for %s, gen:%d\n", res, vtable->klass->name, stat_total_gcs);
-	sgen_hash_table_replace(&alloc_cycle_hash, res, &stat_total_gcs, NULL);
 	return res;
 }
 
@@ -616,7 +611,7 @@ mono_gc_alloc_pinned_obj (MonoVTable *vtable, size_t size)
 		binary_protocol_alloc_pinned (p, vtable, size);
 
 //		fprintf(stderr, "Alloced pinned at %p for %s, gen:%d\n", p, vtable->klass->name, stat_total_gcs);
-		sgen_hash_table_replace(&alloc_cycle_hash, p, &stat_total_gcs, NULL);
+		sgen_record_alloc_cycle(p);
 	}
 	UNLOCK_GC;
 
@@ -635,7 +630,7 @@ mono_gc_alloc_mature (MonoVTable *vtable)
 		mono_object_register_finalizer ((MonoObject*)res);
 
 //	fprintf(stderr, "Alloced mature at %p for %s, gen:%d\n", res, vtable->klass->name, stat_total_gcs);
-	sgen_hash_table_replace(&alloc_cycle_hash, res, &stat_total_gcs, NULL);
+	sgen_record_alloc_cycle(res);
 
 	return res;
 }
@@ -651,10 +646,10 @@ mono_gc_alloc_fixed (size_t size, void *descr)
 		free (res);
 		res = NULL;
 	}
-	
-//	fprintf(stderr, "Alloced fixed at %p, gen:%d\n", &res, stat_total_gcs);
-	sgen_hash_table_replace(&alloc_cycle_hash, &res, &stat_total_gcs, NULL);
-		
+	else {
+		sgen_record_alloc_cycle(res);
+	}
+
 	return res;
 }
 

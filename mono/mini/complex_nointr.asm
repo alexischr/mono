@@ -1,4 +1,4 @@
-Mono Ahead of Time compiler - compiling assembly /home/user/mono/mono/mini/complex-test.exe
+Mono Ahead of Time compiler - compiling assembly /home/user/mono_xamarin/mono/mini/complex-test.exe
 converting method Test:.ctor ()
 remove_block_if_useless, removed BB3
 
@@ -31,9 +31,9 @@ LIVENESS 2 Test:.ctor ()
 LIVENESS BLOCK BB1:
 LIVENESS BLOCK BB2:
 LIVENESS BLOCK BB0:
-Method Test:.ctor () emitted at 0x4110db40 to 0x4110db49 (code length 9) [complex-test.exe]
+Method Test:.ctor () emitted at 0x406ccb40 to 0x406ccb49 (code length 9) [complex-test.exe]
 
-/tmp/.GKh2WN:     file format elf64-x86-64
+/tmp/.oMITWx:     file format elf64-x86-64
 
 
 Disassembly of section .text:
@@ -176,7 +176,7 @@ BLOCK BB6 (BB7, BB8, ):
 	 ldaddr R58 <- R20
 	GEN: R20(4)
 	 loadr8_membase R59 <- [R58 + 0x0]
-	 r8const R60 <- [3.000000]
+	 r8const R60 <- [-5.000000]
 	 fcompare R59 R60 clobbers: a
 	 float_bne_un
 GEN  BB6: {4}
@@ -191,7 +191,7 @@ BLOCK BB8 (BB9, BB7, ):
 	 ldaddr R61 <- R20
 	GEN: R20(4)
 	 loadr8_membase R62 <- [R61 + 0x8]
-	 r8const R63 <- [8.000000]
+	 r8const R63 <- [10.000000]
 	 fcompare R62 R63 clobbers: a
 	 float_beq
 GEN  BB8: {4}
@@ -255,7 +255,7 @@ LIVENESS BLOCK BB9:
 LIVENESS BLOCK BB8:
 	70006:  float_beq
 	70005:  fcompare R62 R63 clobbers: a
-	70004:  r8const R63 <- [8.000000]
+	70004:  r8const R63 <- [10.000000]
 	70003:  loadr8_membase R62 <- [R61 + 0x8]
 	70002:  ldaddr R61 <- R20
 Var R16 live at enter, add range to R16: [70001, 80001)
@@ -267,7 +267,7 @@ LIVENESS BLOCK BB6:
 Var R20 live at exit, set last_use to 60001
 	50006:  float_bne_un
 	50005:  fcompare R59 R60 clobbers: a
-	50004:  r8const R60 <- [3.000000]
+	50004:  r8const R60 <- [-5.000000]
 	50003:  loadr8_membase R59 <- [R58 + 0x0]
 	50002:  ldaddr R58 <- R20
 Var R16 live at enter, add range to R16: [50001, 60001)
@@ -392,9 +392,9 @@ Var R41 live at enter, add range to R41: [1, 10001)
 Var R42 live at enter, add range to R42: [1, 10001)
 Var R46 live at enter, add range to R46: [1, 10001)
 Var R47 live at enter, add range to R47: [1, 10001)
-Method Test:Main () emitted at 0x4110db50 to 0x4110dd48 (code length 504) [complex-test.exe]
+Method Test:Main () emitted at 0x406ccb50 to 0x406ccd48 (code length 504) [complex-test.exe]
 
-/tmp/.9dHNTy:     file format elf64-x86-64
+/tmp/.8YxFUM:     file format elf64-x86-64
 
 
 Disassembly of section .text:
@@ -436,7 +436,7 @@ Disassembly of section .text:
   9b:	4c 8b 44 24 28       	mov    0x28(%rsp),%r8
   a0:	48 8b 74 24 30       	mov    0x30(%rsp),%rsi
   a5:	48 8b 54 24 38       	mov    0x38(%rsp),%rdx
-  aa:	e8 01 82 36 ff       	callq  ffffffffff3682b0 <t_Main+0xffffffffff3682b0>
+  aa:	e8 01 32 bf fd       	callq  fffffffffdbf32b0 <t_Main+0xfffffffffdbf32b0>
   af:	48 8b 44 24 70       	mov    0x70(%rsp),%rax
   b4:	48 89 44 24 10       	mov    %rax,0x10(%rsp)
   b9:	48 8b 44 24 78       	mov    0x78(%rsp),%rax
@@ -450,7 +450,7 @@ Disassembly of section .text:
   df:	4c 8b 44 24 08       	mov    0x8(%rsp),%r8
   e4:	48 8b 74 24 10       	mov    0x10(%rsp),%rsi
   e9:	48 8b 54 24 18       	mov    0x18(%rsp),%rdx
-  ee:	e8 bd 81 36 ff       	callq  ffffffffff3682b0 <t_Main+0xffffffffff3682b0>
+  ee:	e8 bd 31 bf fd       	callq  fffffffffdbf32b0 <t_Main+0xfffffffffdbf32b0>
   f3:	f2 0f 10 44 24 50    	movsd  0x50(%rsp),%xmm0
   f9:	f2 0f 10 0d af 00 00 	movsd  0xaf(%rip),%xmm1        # 1b0 <t_Main+0x1b0>
  100:	00 
@@ -496,11 +496,12 @@ Disassembly of section .text:
  180:	00 00                	add    %al,(%rax)
  182:	00 00                	add    %al,(%rax)
  184:	00 00                	add    %al,(%rax)
- 186:	20 40 00             	and    %al,0x0(%rax)
+ 186:	24 40                	and    $0x40,%al
 	...
- 195:	00 08                	add    %cl,(%rax)
- 197:	40 00 00             	add    %al,(%rax)
+ 194:	00 00                	add    %al,(%rax)
+ 196:	14 c0                	adc    $0xc0,%al
 	...
+ 1a4:	00 00                	add    %al,(%rax)
  1a6:	18 40 00             	sbb    %al,0x0(%rax)
 	...
  1b5:	00 10                	add    %dl,(%rax)
@@ -519,4 +520,4 @@ Method Test:.ctor () emitted as .Lm_0
 Method Test:Main () emitted as .Lm_1
 Code: 513 Info: 4 Ex Info: 6 Unwind Info: 19 Class Info: 30 PLT: 3 GOT Info: 15 GOT: 56 Offsets: 48
 Compiled: 2/2 (100%), No GOT slots: 2 (100%), Direct calls: 0 (100%)
-JIT time: 62 ms, Generation time: 0 ms, Assembly+Link time: 0 ms.
+JIT time: 27 ms, Generation time: 0 ms, Assembly+Link time: 1 ms.
