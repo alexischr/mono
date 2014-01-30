@@ -27,6 +27,9 @@ mono_emit_complex_intrinsics (MonoCompile *cfg, MonoMethod *cmethod, MonoMethodS
 		MonoInst* ins;
 		int left_vreg, right_vreg, tmp_vreg, im1_vreg, im2_vreg;
 
+		if (!(SIMD_VERSION_SSE3 & simd_supported_versions)) 
+			return NULL;
+
 		/*
 			From Intel optimization manual SSE3 algorithm:
 
