@@ -354,9 +354,9 @@ namespace System.IO {
 			if (!disposed) {
 				disposed = true;
 				Stop ();
+				base.Dispose (disposing);
+				GC.SuppressFinalize (this);
 			}
-
-			base.Dispose (disposing);
 		}
 
 		~FileSystemWatcher ()
