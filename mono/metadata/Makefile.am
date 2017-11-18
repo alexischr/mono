@@ -54,7 +54,10 @@ unix_sources = \
 	w32file-unix.c \
 	w32file-unix-glob.c \
 	w32file-unix-glob.h \
-	w32error-unix.c
+	w32error-unix.c \
+	../../external/corefx/src/Native/Unix/Common/pal_compiler.h \
+	../../external/corefx/src/Native/Unix/System.Native/pal_io.h \
+	../../external/corefx/src/Native/Unix/System.Native/pal_io.c
 
 platform_sources = $(unix_sources)
 endif
@@ -330,12 +333,22 @@ sgen_sources = \
 	sgen-client-mono.h
 
 libmonoruntime_la_SOURCES = $(common_sources) $(icall_tables_sources) $(gc_dependent_sources) $(null_gc_sources) $(boehm_sources)
-libmonoruntime_la_CFLAGS = $(BOEHM_DEFINES)
+libmonoruntime_la_CFLAGS = $(BOEHM_DEFINES) -I../../external/corefx/src/Native/Unix/Common
 libmonoruntime_la_LIBADD = libmonoruntime-config.la
 
 libmonoruntimesgen_la_SOURCES = $(common_sources) $(icall_tables_sources) $(gc_dependent_sources) $(sgen_sources)
-libmonoruntimesgen_la_CFLAGS = $(SGEN_DEFINES)
+libmonoruntimesgen_la_CFLAGS = $(SGEN_DEFINES) -I../../external/corefx/src/Native/Unix/Common
 libmonoruntimesgen_la_LIBADD = libmonoruntime-config.la
+
+libmonoruntime_static_la_SOURCES = $(libmonoruntime_la_SOURCES)
+libmonoruntime_static_la_LDFLAGS = -static
+libmonoruntime_static_la_CFLAGS = $(BOEHM_DEFINES) -I../../external/corefx/src/Native/Unix/Common
+libmonoruntime_static_la_LIBADD = $(bundle_obj) libmonoruntime-config.la
+
+libmonoruntimesgen_static_la_SOURCES = $(libmonoruntimesgen_la_SOURCES)
+libmonoruntimesgen_static_la_LDFLAGS = -static
+libmonoruntimesgen_static_la_CFLAGS = $(SGEN_DEFINES) -I../../external/corefx/src/Native/Unix/Common
+libmonoruntimesgen_static_la_LIBADD = libmonoruntime-config.la
 
 libmonoruntimeincludedir = $(includedir)/mono-$(API_VER)/mono/metadata
 

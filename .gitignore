@@ -85,6 +85,8 @@ releases
 stamp-h
 stamp-h1
 stamp-h.in
+/mono/pal_config.h
+/mono/stamp-h2
 /test-driver
 *~
 *.swp
