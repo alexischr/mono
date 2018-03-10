@@ -35,8 +35,10 @@ if [[ $CI_TAGS == *'retry-flaky-tests'* ]]; then
     export MONO_FLAKY_TEST_RETRIES=5
 fi
 
-if [[ ${CI_TAGS} == *'osx-i386'* ]]; then CFLAGS="$CFLAGS -m32 -arch i386"; LDFLAGS="$LDFLAGS -m32 -arch i386"; EXTRA_CONF_FLAGS="${EXTRA_CONF_FLAGS} --with-libgdiplus=/Library/Frameworks/Mono.framework/Versions/Current/lib/libgdiplus.dylib --host=i386-apple-darwin11.2.0 --build=i386-apple-darwin11.2.0"; fi
-if [[ ${CI_TAGS} == *'osx-amd64'* ]]; then CFLAGS="$CFLAGS -m64 -arch x86_64"; LDFLAGS="$LDFLAGS -m64 -arch x86_64" EXTRA_CONF_FLAGS="${EXTRA_CONF_FLAGS} --with-libgdiplus=/Library/Frameworks/Mono.framework/Versions/Current/lib/libgdiplus.dylib"; fi
+bockbuild_flags="--verbose"
+
+if [[ ${CI_TAGS} == *'osx-i386'* ]]; then bockbuild_flags = "${bockbuild_flags} --arch=darwin-32"; fi
+if [[ ${CI_TAGS} == *'osx-amd64'* ]]; then bockbuild_flags = "${bockbuild_flags} --arch=darwin-64"; fi
 if [[ ${CI_TAGS} == *'win-i386'* ]]; then PLATFORM=Win32; EXTRA_CONF_FLAGS="${EXTRA_CONF_FLAGS} --host=i686-w64-mingw32"; export MONO_EXECUTABLE="${MONO_REPO_ROOT}/msvc/build/sgen/Win32/bin/Release/mono-sgen.exe"; fi
 if [[ ${CI_TAGS} == *'win-amd64'* ]]; then PLATFORM=x64; EXTRA_CONF_FLAGS="${EXTRA_CONF_FLAGS} --host=x86_64-w64-mingw32 --disable-boehm"; export MONO_EXECUTABLE="${MONO_REPO_ROOT}/msvc/build/sgen/x64/bin/Release/mono-sgen.exe"; fi
 
@@ -117,7 +119,7 @@ if [[ ${CI_TAGS} == *'webassembly'* ]];
 fi
 
 
-if [[ ${CI_TAGS} != *'mac-sdk'* ]]; # Mac SDK builds Mono itself
+if [[ ${CI_TAGS} != *'osx'* ]]; # Mac SDK builds Mono itself
 	then
 	${TESTCMD} --label=configure --timeout=60m --fatal ./autogen.sh $EXTRA_CONF_FLAGS
 fi
@@ -144,7 +146,7 @@ if [[ ${CI_TAGS} == *'monolite'* ]]; then make get-monolite-latest; fi
 make_parallelism=-j4
 if [[ ${CI_TAGS} == *'linux-ppc64el'* ]]; then make_parallelism=-j1; fi
 
-if [[ ${CI_TAGS} != *'mac-sdk'* ]]; # Mac SDK builds Mono itself
+if [[ ${CI_TAGS} != *'osx'* ]]; # Mac SDK builds Mono itself
 	then
 	${TESTCMD} --label=make --timeout=${make_timeout} --fatal make ${make_parallelism} -w V=1
 fi
